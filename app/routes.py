@@ -8,7 +8,7 @@ routes = Blueprint('routes', __name__)
 
 @routes.route('/')
 def index():
-    return redirect(url_for('login'))
+    return redirect(url_for('routes.login'))
 
 @routes.route('/register', methods=['GET', 'POST'])
 def register():
@@ -18,15 +18,15 @@ def register():
 
         user = User.query.filter_by(username=username).first()
         if user:
-            flash('Usuário já existe')
-            return redirect(url_for('register'))
+            flash('Usuário já existe', 'danger')
+            return redirect(url_for('routes.register'))
 
         new_user = User(username=username)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
-        flash('Usuário criado com sucesso!')
-        return redirect(url_for('login'))
+        flash('Usuário criado com sucesso!', 'success')
+        return redirect(url_for('routes.login'))
 
     return render_template('register.html')
 
@@ -39,10 +39,10 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             login_user(user)
-            flash('Login bem-sucedido!')
-            return redirect(url_for('dashboard'))
+            flash('Login bem-sucedido!', 'success')
+            return redirect(url_for('routes.dashboard'))
         else:
-            flash('Usuário ou senha inválidos.')
+            flash('Usuário ou senha inválidos.', 'danger')
 
     return render_template('login.html')
 
@@ -50,8 +50,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('Você saiu da sua conta!')
-    return redirect(url_for('login'))
+    return redirect(url_for('routes.login'))
 
 
 @routes.route('/dashboard')
@@ -71,8 +70,8 @@ def create_task():
         new_task = Task(title=title, description=description, status=status, user_id=current_user.id)
         db.session.add(new_task)
         db.session.commit()
-        flash('Tarefa criada com sucesso!')
-        return redirect(url_for('dashboard'))
+        flash('Tarefa criada com sucesso!', 'success')
+        return redirect(url_for('routes.dashboard'))
 
     return render_template('create_task.html')
 
@@ -85,8 +84,8 @@ def edit_task(task_id):
         task.description = request.form.get('description')
         task.status = request.form.get('status')
         db.session.commit()
-        flash('Tarefa atualizada com sucesso!')
-        return redirect(url_for('dashboard'))
+        flash('Tarefa atualizada com sucesso!', 'success')
+        return redirect(url_for('routes.dashboard'))
 
     return render_template('edit_task.html', task=task)
 
@@ -96,6 +95,6 @@ def delete_task(task_id):
     task = Task.query.get_or_404(task_id)
     db.session.delete(task)
     db.session.commit()
-    flash('Tarefa excluída com sucesso!')
-    return redirect(url_for('dashboard'))
+    flash('Tarefa excluída com sucesso!', 'success')
+    return redirect(url_for('routes.dashboard'))
 

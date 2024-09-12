@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
                         <h2>Login</h2>
                     </div>
                     <div class="card-body">
-                        <form method="POST">
+                        <form method="POST" action="{{ url_for('routes.login') }}">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Nome de Usuário</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
@@ -28,7 +28,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <a href="{{ url_for('register') }}">Não tem uma conta? Registre-se</a>
+                        <a href="{{ url_for('routes.register') }}">Não tem uma conta? Registre-se</a>
                     </div>
                 </div>
             </div>

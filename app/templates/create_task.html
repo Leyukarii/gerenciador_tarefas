@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h2 class="my-4">Criar Nova Tarefa</h2>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('routes.create_task') }}">
             <div class="mb-3">
                 <label for="title" class="form-label">Título</label>
                 <input type="text" class="form-control" id="title" name="title" required>
@@ -27,7 +27,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Criar</button>
-            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ url_for('routes.dashboard') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </body>
